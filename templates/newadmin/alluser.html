@@ -1,0 +1,108 @@
+        {% extends 'newadmin/base.html' %}
+{% load static %}
+{% block body %}
+    <div class="container-fluid">
+
+        <div class="row">
+            <div class="col-xl-12 col-xxl-12 col-lg-12 col-md-12">
+								<div class="card">
+									<div class="card-body">
+                                        <div style="margin-bottom: 20px;">
+                                            <h4 style="display: inline-block">USERS</h4>
+                                            {% if user.user_type == 1 or 6%}
+                                            <a style="float: right;" href="{% url "create_user" %}" class="btn btn-primary btn-md">Create User</a>
+                                            {% endif %}
+                                        </div>
+										<div class="table-responsive">
+											<table id="example" class="display" style="min-width: 845px">
+												<thead>
+													<tr>
+														<th>
+                                                            S.NO
+														</th>
+														<th><strong>EMAIL</strong></th>
+														<th><strong>COMPANY</strong></th>
+														<th><strong>USER TYPE</strong></th>
+														<th><strong>PHONE</strong></th>
+														<th><strong>APPROVED BY ADMIN</strong></th>
+														<th><strong>APPROVED BY COMPANY ADMIN</strong></th>
+														<th style="width:85px;"><strong>EDIT</strong></th>
+													</tr>
+												</thead>
+												<tbody>
+                                                {% for single_user in users reversed %}
+													<tr>
+														<td>
+															{{ forloop.counter }}
+														</td>
+                                                        <td><a href="{% url 'update_user' single_user.id %}"><b>{{ single_user.email }}</b></a></td>
+														<td>{{ single_user.company }}</td>
+														<td>{{ single_user.get_user_type_display}}</td>
+														<td>{{ single_user.phone }}</td>
+                                                        {% if single_user.user_type != 1 %}
+														<td class="recent-stats align-items-center">
+                                                            {% if single_user.approved_by_super_admin%}
+                                                                <i class="fa fa-circle text-success mr-1"></i>Approved
+                                                            {% else %}
+                                                                <i class="fa fa-circle text-danger mr-1"></i>Not Approved
+                                                            {% endif %}
+                                                        </td>
+                                                        {% else %}
+                                                            <td class="recent-stats align-items-center">
+                                                                <i class="fa fa-circle text-warning mr-1"></i>Not Required
+                                                            </td>
+                                                        {% endif %}
+
+                                                        {% if single_user.user_type == 1 or single_user.user_type == 4 or single_user.user_type == 6 %}
+                                                            <td class="recent-stats align-items-center">
+                                                                <i class="fa fa-circle text-warning mr-1"></i>Not Required
+                                                            </td>
+                                                        {% else %}
+														    <td class="recent-stats align-items-center">
+                                                                {% if single_user.approved_by_company_admin%}
+                                                                    <i class="fa fa-circle text-success mr-1"></i>Approved
+                                                                    {% else %}
+                                                                    <i class="fa fa-circle text-danger mr-1"></i>Not Approved
+                                                                {% endif %}
+                                                                </td>
+                                                        {% endif %}
+														<td>
+                                                            {% if user.user_type == 1 %}
+                                                                <a href="{% url 'update_user' single_user.id %}" class="btn btn-primary shadow btn-xs sharp mr-1"><i class="fa fa-pencil"></i></a>
+                                                                <a href="#" class="btn btn-danger shadow btn-xs sharp" data-toggle="modal" data-target="#del_user{{ single_user.id }}"><i class="fa fa-trash"></i></a>
+                                                            {% endif %}
+                                                        {% if user.user_type == 6 %}
+                                                                <a href="{% url 'update_user' single_user.id %}" class="btn btn-primary shadow btn-xs sharp mr-1"><i class="fa fa-pencil"></i></a>
+														{% endif %}
+                                                        </td>
+													</tr>
+                                                                       <div class="modal fade" id="del_user{{ single_user.id }}">
+                                                        <div class="modal-dialog modal-dialog-centered" role="document">
+                                                            <div class="modal-content">
+                                                                <div class="modal-header">
+                                                                    <h5 class="modal-title">Delete User</h5>
+                                                                    <button type="button" class="close" data-dismiss="modal"><span></span>
+                                                                    </button>
+                                                                </div>
+                                                                <div class="modal-body">
+                                                                    <p>Are you sure you want to Delete User ? </p>
+                                                                </div>
+                                                                <div class="modal-footer">
+                                                                    <button type="button" class="btn btn-danger light" data-dismiss="modal">Close</button>
+                                                                    <a href="{% url 'delete_user' single_user.id %}" class="btn btn-danger">Delete</a>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                {% endfor %}
+												</tbody>
+											</table>
+										</div>
+									</div>
+								</div>
+							</div>
+        </div>
+
+
+    </div>
+{% endblock %}

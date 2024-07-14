@@ -1,0 +1,73 @@
+{% extends 'newadmin/base.html' %}
+{% load static %}
+{% block body %}
+
+    <div class="container-fluid">
+                <div class="row">
+
+        <div class="col-xl-12 col-xxl-12 col-lg-12 col-md-12">
+								<div class="card">
+									<div class="card-body">
+
+                                        <div style="margin-bottom: 20px;">
+                                            <h4 style="display: inline-block">CONSIGNMENTS</h4>
+                                            <a style="float: right;" href="{% url "create_consignment" %}" class="btn btn-primary btn-md">Create Consignment</a>
+                                        </div>
+										<div class="table-responsive">
+											<table id="example" class="display" style="min-width: 845px">
+												<thead>
+													<tr>
+														<th>
+															S.NO
+														</th>
+														<th><strong>ORDER NUMBER</strong></th>
+														<th><strong>CONSIGNMENT ID</strong></th>
+														<th><strong>VEHICLE NUMBER</strong></th>
+														<th style="width:85px;"><strong>EDIT</strong></th>
+													</tr>
+												</thead>
+												<tbody>
+                                                {% for consignments in consignment reversed%}
+													<tr>
+														<td>
+															{{ forloop.counter }}
+														</td>
+														<td><b>{{ consignments.order_number }}</b></td>
+														<td><a href="{% url 'update_consignment' consignments.id%}">{{ consignments.consignment_id }}</a></td>
+														<td>{{ consignments.vehicle_number }}</td>
+														<td>
+															<a href="{% url 'update_consignment' consignments.id%}" class="btn btn-primary shadow btn-xs sharp mr-1"><i class="fa fa-pencil"></i></a>
+															<a href="#" class="btn btn-danger shadow btn-xs sharp" data-toggle="modal" data-target="#del_consignment{{ consignments.id }}"><i class="fa fa-trash"></i></a>
+														</td>
+													</tr>
+
+                                                    <div class="modal fade" id="del_consignment{{ consignments.id }}">
+                                                        <div class="modal-dialog modal-dialog-centered" role="document">
+                                                            <div class="modal-content">
+                                                                <div class="modal-header">
+                                                                    <h5 class="modal-title">Delete Consignment</h5>
+                                                                    <button type="button" class="close" data-dismiss="modal"><span>&times;</span>
+                                                                    </button>
+                                                                </div>
+                                                                <div class="modal-body">
+                                                                    <p>Are you sure you want to Delete Consignment  <b>" {{ consignments.consignment_id }} ? "</b> </p>
+                                                                </div>
+                                                                <div class="modal-footer">
+                                                                    <button type="button" class="btn btn-danger light" data-dismiss="modal">Close</button>
+                                                                    <a href="{% url 'delete_consignment' consignments.id %}" class="btn btn-danger">Delete</a>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    {% endfor %}
+												</tbody>
+											</table>
+										</div>
+									</div>
+								</div>
+							</div>
+                        </div>
+                    </div>
+
+
+{% endblock %}

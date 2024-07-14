@@ -1,0 +1,362 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+<head>
+    <title></title>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <style type="text/css">
+        /* FONTS */
+        @media screen {
+            @font-face {
+                font-family: 'Lato';
+                font-style: normal;
+                font-weight: 400;
+                src: local('Lato Regular'), local('Lato-Regular'), url(https://fonts.gstatic.com/s/lato/v11/qIIYRU-oROkIk8vfvxw6QvesZW2xOQ-xsNqO47m55DA.woff) format('woff');
+            }
+            @font-face {
+                font-family: 'Lato';
+                font-style: normal;
+                font-weight: 700;
+                src: local('Lato Bold'), local('Lato-Bold'), url(https://fonts.gstatic.com/s/lato/v11/qdgUG4U09HnJwhYI-uK18wLUuEpTyoUstqEm5AMlJo4.woff) format('woff');
+            }
+            @font-face {
+                font-family: 'Lato';
+                font-style: italic;
+                font-weight: 400;
+                src: local('Lato Italic'), local('Lato-Italic'), url(https://fonts.gstatic.com/s/lato/v11/RYyZNoeFgb0l7W3Vu1aSWOvvDin1pK8aKteLpeZ5c0A.woff) format('woff');
+            }
+            @font-face {
+                font-family: 'Lato';
+                font-style: italic;
+                font-weight: 700;
+                src: local('Lato Bold Italic'), local('Lato-BoldItalic'), url(https://fonts.gstatic.com/s/lato/v11/HkF_qI1x_noxlxhrhMQYELO3LdcAZYWl9Si6vvxL-qU.woff) format('woff');
+            }
+        }
+        /* CLIENT-SPECIFIC STYLES */
+        body, table, td, a {
+            -webkit-text-size-adjust: 100%;
+            -ms-text-size-adjust: 100%;
+        }
+        table, td {
+            mso-table-lspace: 0pt;
+            mso-table-rspace: 0pt;
+        }
+        img {
+            -ms-interpolation-mode: bicubic;
+        }
+        /* RESET STYLES */
+        img {
+            border: 0;
+            height: auto;
+            line-height: 100%;
+            outline: none;
+            text-decoration: none;
+        }
+        table {
+            border-collapse: collapse !important;
+        }
+        body {
+            height: 100% !important;
+            margin: 0 !important;
+            padding: 0 !important;
+            width: 100% !important;
+        }
+        /* iOS BLUE LINKS */
+        a[x-apple-data-detectors] {
+            color: inherit !important;
+            text-decoration: none !important;
+            font-size: inherit !important;
+            font-family: inherit !important;
+            font-weight: inherit !important;
+            line-height: inherit !important;
+        }
+        /* MOBILE STYLES */
+        @media screen and (max-width:600px) {
+            h1 {
+                font-size: 16px !important;
+                line-height: 32px !important;
+            }
+        }
+        /* ANDROID CENTER FIX */
+        div[style*="margin: 16px 0;"] {
+            margin: 0 !important;
+        }
+    </style>
+</head>
+<body style="background-color: #f4f4f4; margin: 0 !important; padding: 0 !important;">
+
+
+    <table border="0" cellpadding="0" cellspacing="0" width="100%">
+        <tr>
+            <td bgcolor="#11dd6a" align="center">
+                <table align="center" border="0" cellspacing="0" cellpadding="0" width="650">
+                <tr>
+                <td align="center" valign="top" width="650">
+                <![endif]–>
+                <table border="0" cellpadding="0" cellspacing="0" width="100%" style="max-width: 650px;">
+                    <tr>
+                        <td align="center" valign="top" style="padding: 40px 10px 40px 10px;">
+                            <span>
+                                <h2 style="color: #0b3103; font-family: 'Lato', Helvetica, Arial, sans-serif; font-size: 30px;margin: 0;  font-weight: 600;">CLEANTRACK</h2>
+                            </span>
+                        </td>
+                    </tr>
+                </table>
+                </td>
+                </tr>
+                </table>
+            </td>
+        </tr>
+        <tr>
+            <td bgcolor="#11dd6a" align="center" style="padding: 0px 10px 0px 10px;">
+                <table align="center" border="0" cellspacing="0" cellpadding="0" width="650">
+                <tr>
+                <td align="center" valign="top" width="600">
+                <table border="0" cellpadding="0" cellspacing="0" width="100%" style="max-width: 650px;">
+                    <tr>
+                        <td bgcolor="#ffffff" align="center" valign="top" style="border:1px solid #11dd6a; border-bottom:0;padding: 40px 20px 20px 20px; border-radius: 4px 4px 0px 0px; color: #111111; font-family: 'Lato', Helvetica, Arial, sans-serif; font-size: 48px; font-weight: 400;">
+                            {% if heading %}
+                                <p style="font-size: 15px;font-family: 'Lato', Helvetica, Arial, sans-serif; font-weight: 600;">{{ heading }}</p>
+                            {% endif %}
+                            {% if subheading %}
+                                <p style="font-size: 15px;font-family: 'Lato', Helvetica, Arial, sans-serif; font-weight: 600;">{{ subheading }}</p>
+                            {% endif %}
+                        {% if body %}
+                            <p style="font-size: 12px; font-weight: 600;">{{ body }}</p>
+                        {% endif %}
+                        </td>
+                    </tr>
+                </table>
+                </td>
+                </tr>
+                </table>
+            </td>
+        </tr>
+        <tr>
+            <td bgcolor="#f4f4f4" align="center" style="padding: 0px 10px 0px 10px;">
+                <table align="center" border="0" cellspacing="0" cellpadding="0" width="650">
+                <tr>
+                <td align="center" valign="top" width="600">
+                <table border="0" cellpadding="0" cellspacing="0" width="100%"bgcolor="#ffffff"  style="max-width: 650px; border: 1px solid #11dd6a; border-top: 0;">
+
+                    {% if order_number %}
+                    <tr>
+                        <td bgcolor="#ffffff" align="left" style="padding: 10px 20px; color: #666666; font-family: 'Lato', Helvetica, Arial, sans-serif; font-size: 18px; font-weight: 400; line-height: 25px;">
+                            <strong>Order Number</strong>
+                        </td>
+                        <td bgcolor="#ffffff" align="left" style="padding: 10px 20px; color: #666666; font-family: 'Lato', Helvetica, Arial, sans-serif; font-size: 18px; font-weight: 400; line-height: 25px;">
+                            : {{ order_number }}
+                        </td>
+                    </tr>
+                {% endif %}
+                    {% if created_by %}
+                    <tr>
+                        <td bgcolor="#ffffff" align="left" style="padding: 10px 20px; color: #666666; font-family: 'Lato', Helvetica, Arial, sans-serif; font-size: 18px; font-weight: 400; line-height: 25px;">
+                            <strong>Collected by</strong>
+                        </td>
+                        <td bgcolor="#ffffff" align="left" style="padding: 10px 20px; color: #666666; font-family: 'Lato', Helvetica, Arial, sans-serif; font-size: 18px; font-weight: 400; line-height: 25px;">
+                            : {{ created_by }}
+                        </td>
+                    </tr>
+                {% endif %}
+                    {% if consignment_no %}
+                    <tr>
+                        <td bgcolor="#ffffff" align="left" style="padding: 10px 20px; color: #666666; font-family: 'Lato', Helvetica, Arial, sans-serif; font-size: 18px; font-weight: 400; line-height: 25px;">
+                            <strong>Consignment No.</strong>
+                        </td>
+                        <td bgcolor="#ffffff" align="left" style="padding: 10px 20px; color: #666666; font-family: 'Lato', Helvetica, Arial, sans-serif; font-size: 18px; font-weight: 400; line-height: 25px;">
+                            : {{ consignment_no }}
+                        </td>
+                    </tr>
+                {% endif %}
+                    {% if dispatch_date %}
+                    <tr>
+                        <td bgcolor="#ffffff" align="left" style="padding: 10px 20px; color: #666666; font-family: 'Lato', Helvetica, Arial, sans-serif; font-size: 18px; font-weight: 400; line-height: 25px;">
+                            <strong>Date and Time</strong>
+                        </td>
+                        <td bgcolor="#ffffff" align="left" style="padding: 10px 20px; color: #666666; font-family: 'Lato', Helvetica, Arial, sans-serif; font-size: 18px; font-weight: 400; line-height: 25px;">
+                            : {{ dispatch_date }} (IST)
+                        </td>
+                    </tr>
+                    {% endif %}
+                    {% if unloading_date %}
+                    <tr>
+                        <td bgcolor="#ffffff" align="left" style="padding: 10px 20px; color: #666666; font-family: 'Lato', Helvetica, Arial, sans-serif; font-size: 18px; font-weight: 400; line-height: 25px;">
+                            <strong>Date and Time</strong>
+                        </td>
+                        <td bgcolor="#ffffff" align="left" style="padding: 10px 20px; color: #666666; font-family: 'Lato', Helvetica, Arial, sans-serif; font-size: 18px; font-weight: 400; line-height: 25px;">
+                            : {{ unloading_date }} (IST)
+                        </td>
+                    </tr>
+                    {% endif %}
+                    {% if city %}
+                    <tr>
+                        <td bgcolor="#ffffff" align="left" style="padding: 10px 20px; color: #666666; font-family: 'Lato', Helvetica, Arial, sans-serif; font-size: 18px; font-weight: 400; line-height: 25px;">
+                            <strong>City</strong>
+                        </td>
+                        <td bgcolor="#ffffff" align="left" style="padding: 10px 20px; color: #666666; font-family: 'Lato', Helvetica, Arial, sans-serif; font-size: 18px; font-weight: 400; line-height: 25px;">
+                            : {{ city }}
+                        </td>
+                    </tr>
+                    {% endif %}
+                    {% if vehicle_number %}
+                    <tr>
+                        <td bgcolor="#ffffff" align="left" style="padding: 10px 20px; color: #666666; font-family: 'Lato', Helvetica, Arial, sans-serif; font-size: 18px; font-weight: 400; line-height: 25px;">
+                            <strong>Vehicle No.</strong>
+                        </td>
+                        <td bgcolor="#ffffff" align="left" style="padding: 10px 20px; color: #666666; font-family: 'Lato', Helvetica, Arial, sans-serif; font-size: 18px; font-weight: 400; line-height: 25px;">
+                            : {{ vehicle_number }}
+                        </td>
+                    </tr>
+                    {% endif %}
+                {% if weight %}
+                    <tr>
+                        <td bgcolor="#ffffff" align="left" style="padding: 10px 20px; color: #666666; font-family: 'Lato', Helvetica, Arial, sans-serif; font-size: 18px; font-weight: 400; line-height: 25px;">
+                            <strong>Weight in Kg</strong>
+                        </td>
+                        <td bgcolor="#ffffff" align="left" style="padding: 10px 20px; color: #666666; font-family: 'Lato', Helvetica, Arial, sans-serif; font-size: 18px; font-weight: 400; line-height: 25px;">
+                            : {{ weight }} Kg
+                        </td>
+                    </tr>
+                {% endif %}
+                {% if order_weight %}
+                    <tr>
+                        <td bgcolor="#ffffff" align="left" style="padding: 10px 20px; color: #666666; font-family: 'Lato', Helvetica, Arial, sans-serif; font-size: 18px; font-weight: 400; line-height: 25px;">
+                            <strong>Weight in Kg</strong>
+                        </td>
+                        <td bgcolor="#ffffff" align="left" style="padding: 10px 20px; color: #666666; font-family: 'Lato', Helvetica, Arial, sans-serif; font-size: 18px; font-weight: 400; line-height: 25px;">
+                            : {{ order_weight }} Kg
+                        </td>
+                    </tr>
+                {% endif %}
+                {% if collection_company %}
+                    <tr>
+                        <td bgcolor="#ffffff" align="left" style="padding: 10px 20px; color: #666666; font-family: 'Lato', Helvetica, Arial, sans-serif; font-size: 18px; font-weight: 400; line-height: 25px;">
+                            <strong>Collection Company</strong>
+                        </td>
+                        <td bgcolor="#ffffff" align="left" style="padding: 10px 20px; color: #666666; font-family: 'Lato', Helvetica, Arial, sans-serif; font-size: 18px; font-weight: 400; line-height: 25px;">
+                            : {{ collection_company }}
+                        </td>
+                    </tr>
+                {% endif %}
+                {% if disposal_company %}
+                    <tr>
+                        <td bgcolor="#ffffff" align="left" style="padding: 10px 20px; color: #666666; font-family: 'Lato', Helvetica, Arial, sans-serif; font-size: 18px; font-weight: 400; line-height: 25px;">
+                            <strong>Disposal Company</strong>
+                        </td>
+                        <td bgcolor="#ffffff" align="left" style="padding: 10px 20px; color: #666666; font-family: 'Lato', Helvetica, Arial, sans-serif; font-size: 18px; font-weight: 400; line-height: 25px;">
+                            : {{ disposal_company }}
+                        </td>
+                    </tr>
+                {% endif %}
+                    {% if fullname %}
+                    <tr>
+                        <td bgcolor="#ffffff" align="left" style="padding: 10px 20px; color: #666666; font-family: 'Lato', Helvetica, Arial, sans-serif; font-size: 18px; font-weight: 400; line-height: 25px;">
+                            <strong>Full name</strong>
+                        </td>
+                        <td bgcolor="#ffffff" align="left" style="padding: 10px 20px; color: #666666; font-family: 'Lato', Helvetica, Arial, sans-serif; font-size: 18px; font-weight: 400; line-height: 25px;">
+                            : {{ fullname }}
+                        </td>
+                    </tr>
+                    {% endif %}
+                    {% if user_email %}
+                    <tr>
+                        <td bgcolor="#ffffff" align="left" style="padding: 10px 20px; color: #666666; font-family: 'Lato', Helvetica, Arial, sans-serif; font-size: 18px; font-weight: 400; line-height: 25px;">
+                            <strong>Email ID</strong>
+                        </td>
+                        <td bgcolor="#ffffff" align="left" style="padding: 10px 20px; color: #666666; font-family: 'Lato', Helvetica, Arial, sans-serif; font-size: 18px; font-weight: 400; line-height: 25px;">
+                            : {{ user_email }}
+                        </td>
+                    </tr>
+                    {% endif %}
+                {% if password %}
+                    <tr>
+                        <td bgcolor="#ffffff" align="left" style="padding: 10px 20px; color: #666666; font-family: 'Lato', Helvetica, Arial, sans-serif; font-size: 18px; font-weight: 400; line-height: 25px;">
+                            <strong>Password</strong>
+                        </td>
+                        <td bgcolor="#ffffff" align="left" style="padding: 10px 20px; color: #666666; font-family: 'Lato', Helvetica, Arial, sans-serif; font-size: 18px; font-weight: 400; line-height: 25px;">
+                            : {{ password }}
+                        </td>
+                    </tr>
+                    {% endif %}
+                {% if phone_no %}
+                    <tr>
+                        <td bgcolor="#ffffff" align="left" style="padding: 10px 20px; color: #666666; font-family: 'Lato', Helvetica, Arial, sans-serif; font-size: 18px; font-weight: 400; line-height: 25px;">
+                            <strong>Phone Number</strong>
+                        </td>
+                        <td bgcolor="#ffffff" align="left" style="padding: 10px 20px; color: #666666; font-family: 'Lato', Helvetica, Arial, sans-serif; font-size: 18px; font-weight: 400; line-height: 25px;">
+                            : {{ phone_no }}
+                        </td>
+                    </tr>
+                    {% endif %}
+                {% if otp %}
+                    <tr>
+                        <td bgcolor="#ffffff" align="left" style="padding: 10px 20px; color: #666666; font-family: 'Lato', Helvetica, Arial, sans-serif; font-size: 18px; font-weight: 400; line-height: 25px;">
+                            <strong>Otp</strong>
+                        </td>
+                        <td bgcolor="#ffffff" align="left" style="padding: 10px 20px; color: #666666; font-family: 'Lato', Helvetica, Arial, sans-serif; font-size: 18px; font-weight: 400; line-height: 25px;">
+                            : {{ otp }}
+                        </td>
+                    </tr>
+                    {% endif %}
+                <br>
+                <br>
+                {% if order_comment1 %}
+                    <tr>
+                        <td bgcolor="#ffffff" align="left" colspan="2" style="padding: 10px 20px; color: #666666; font-family: 'Lato', Helvetica, Arial, sans-serif; font-size: 12px; font-weight: 400; ">
+                            <p>{{ order_comment1 }}</p>
+                        </td>
+                    </tr>
+                    {% endif %}
+                {% if order_comment2 %}
+                    <tr>
+                        <td bgcolor="#ffffff" align="left" colspan="2" style="padding: 10px 20px; color: #666666; font-family: 'Lato', Helvetica, Arial, sans-serif; font-size: 12px; font-weight: 400; ">
+                            <p>{{ order_comment2 }}</p>
+                        </td>
+                    </tr>
+                    {% endif %}
+                {% if note %}
+                    <tr>
+                        <td bgcolor="#ffffff" align="left" colspan="2" style="padding: 10px 20px; color: #666666; font-family: 'Lato', Helvetica, Arial, sans-serif; font-size: 15px; font-weight: 400; ">
+                            <p style="margin: 0;font-size: 18px; color: #f25767;"><strong style="">NOTE</strong> : {{ note }}</p>
+                        </td>
+                    </tr>
+                    {% endif %}
+                    <tr>
+                        <td bgcolor="#ffffff" align="left" colspan="2" style="padding: 10px 20px; color: #666666; font-family: 'Lato', Helvetica, Arial, sans-serif; font-size: 18px; font-weight: 400; ">
+                            <p>Regards,</p>
+                            <p>Team Cleantrack</p>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td bgcolor="#ffffff" align="left" colspan="2" style="padding: 10px 20px; color: #666666; font-family: 'Lato', Helvetica, Arial, sans-serif; font-size: 12px; font-weight: 400; line-height: 25px;">
+                            <strong>&#169; 2020 - CLEANTRACK. All rights reserved</strong>
+                        </td>
+                    </tr>
+                </table>
+                </td>
+                </tr>
+                </table>
+            </td>
+        </tr>
+        <tr>
+            <td bgcolor="#f4f4f4" align="center" style="padding: 0px 10px 0px 10px;">
+                <table align="center" border="0" cellspacing="0" cellpadding="0" width="650">
+                <tr>
+                <td align="center" valign="top" width="600">
+                <table border="0" cellpadding="0" cellspacing="0" width="100%" style="max-width: 650px;">
+                    <br><br>
+                    <tr>
+                    </tr>
+                </table>
+                </td>
+                </tr>
+                </table>
+            </td>
+        </tr>
+    </table>
+
+</body>
+</html>

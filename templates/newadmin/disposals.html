@@ -1,0 +1,98 @@
+{% extends 'newadmin/base.html' %}
+{% load static %}
+{% block body %}
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-xl-12 col-xxl-12 col-lg-12 col-md-12">
+								<div class="card">
+									<div class="card-header border-0 pb-0">
+										<h4 class="card-title">DISPOSALS</h4>
+                                        <div class="text-right">
+                                         {% if  user.user_type == 1 %}
+                                            <a href="{% url "add_disposals" %}" class="btn btn-primary">Create Disposal Entry</a>
+                                        {% endif %}
+                                        </div>
+									</div>
+									<div class="card-body">
+										<div class="table-responsive">
+											<table id="example" class="display" style="min-width: 845px">
+												<thead>
+													<tr>
+														<th >
+                                                            S.NO
+														</th>
+														<th><strong>CONSIGNMENT</strong></th>
+														<th><strong>COMPANY</strong></th>
+														<th><strong>CREATED BY</strong></th>
+														<th><strong>UNLOADING DATE</strong></th>
+														<th><strong>CITY</strong></th>
+														<th><strong>VEHICLE NUMBER</strong></th>
+														<th><strong>WEIGHT (kg)</strong></th>
+														<th><strong>STATUS</strong></th>
+                                                        {% if  user.user_type == 1 %}
+														<th style="width:85px;"><strong>EDIT</strong></th>
+                                                        {% endif %}
+                                                        {% if user.user_type == 4 or user.user_type == 6 %}
+                                                            <th style="width:85px;"><strong>REVIEW</strong></th>
+                                                        {% endif %}
+													</tr>
+												</thead>
+												<tbody>
+                                                {% for disposal in disposals reversed %}
+													<tr>
+														<td>
+                                                            {{ forloop.counter }}
+														</td>
+														<td>
+                                                            {% if user.user_type == 1 %}
+                                                            <a href="{% url 'edit_disposals' disposal.id %}"><b>{{ disposal.consignment }}</b></a>
+                                                                {% elif user.user_type == 4 or user.user_type == 5 or user.user_type == 6%}
+                                                            <a href="{% url 'review' disposal.consignment %}"><b>{{ disposal.consignment }}</b></a>
+                                                            {% endif %}
+                                                        </td>
+														<td>{{ disposal.company }}</td>
+														<td>{{ disposal.collected_by}}</td>
+														<td>{{ disposal.unloading_date }}</td>
+														<td>{{ disposal.city }}</td>
+														<td>{{ disposal.vehicle_number }}</td>
+														<td>{{ disposal.weight }}</td>
+														<td>{{ disposal.get_disposal_status_display }}</td>
+														<td>
+                                                         {% if user.user_type == 1 %}
+															<a href="{% url 'edit_disposals' disposal.id %}" class="btn btn-primary shadow btn-xs sharp mr-1"><i class="fa fa-pencil"></i></a>
+															<a href="#" class="btn btn-danger shadow btn-xs sharp" data-toggle="modal" data-target="#del_disposal_entry{{ disposal.id }}"><i class="fa fa-trash"></i></a>
+														{% endif %}
+                                                        {% if user.user_type == 4 or user.user_type == 6 %}
+															<a href="{% url 'review' disposal.consignment %}" class="btn btn-warning shadow btn-xs sharp mr-1"><i class="fa fa-eye"></i></a>
+                                                        {% endif %}
+                                                        </td>
+													</tr>
+
+                                                    <div class="modal fade" id="del_disposal_entry{{ disposal.id }}">
+                                                        <div class="modal-dialog modal-dialog-centered" role="document">
+                                                            <div class="modal-content">
+                                                                <div class="modal-header">
+                                                                    <h5 class="modal-title">Delete Disposal Entry</h5>
+                                                                    <button type="button" class="close" data-dismiss="modal"><span>&times;</span>
+                                                                    </button>
+                                                                </div>
+                                                                <div class="modal-body">
+                                                                    <p>Are you sure you want to Delete this Disposal Entry ? </p>
+                                                                </div>
+                                                                <div class="modal-footer">
+                                                                    <button type="button" class="btn btn-danger light" data-dismiss="modal">Close</button>
+                                                                    <a href="{% url 'delete_disposal_entry' disposal.consignment %}" class="btn btn-danger">Delete</a>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                {% endfor %}
+												</tbody>
+											</table>
+										</div>
+									</div>
+								</div>
+							</div>
+        </div>
+    </div>
+{% endblock %}

@@ -1,0 +1,162 @@
+{% extends 'newadmin/base.html' %}
+{% load static %}
+{% block body %}
+        <style>
+        .company_hide{
+            display: none;
+        }
+        .company_show{
+            display: flex;
+        }
+        .bootstrap-select:not([class*=col-]):not([class*=form-control]):not(.input-group-btn) {
+    width: 100%;
+}  @media (min-width: 780px) {
+            .col-sm-9 {
+                max-width: 100%;
+            }
+        }
+    </style>
+    <div class="container-fluid">
+    <div class="row">
+        <div class="col-xl-12 col-xxl-12 col-lg-12 col-md-12">
+        <form action="" method="post" enctype="multipart/form-data">
+                        {% csrf_token %}
+                        <div class="card">
+                            <div class="card-header">
+                                <h4 class="card-title">UPDATE USER</h4>
+                            </div>
+                            <div class="card-body">
+                                <div class="basic-form">
+                                    <form  method="POST" action="" enctype="multipart/form-data">
+                                        <div class="form-group row">
+                                            <label class="col-sm-3 col-form-label">First Name</label>
+
+                                            {{ update_user.first_name }}
+                                        </div>
+                                        <div class="form-group row">
+                                            <label class="col-sm-3 col-form-label">Last Name</label>
+                                            {{ update_user.last_name }}
+                                        </div>
+                                        <div class="form-group row">
+                                            <label class="col-sm-3 col-form-label">Email</label>
+                                            {{ update_user.email }}
+                                        </div>
+                                        <div class="form-group row">
+                                            <label class="col-sm-3 col-form-label">Phone</label>
+                                                {{ update_user.phone }}
+                                        </div>
+                                        <div class="form-group row">
+                                            <label class="col-sm-3 col-form-label">Street</label>
+                                            {{ update_user.street }}
+                                        </div>
+                                        <div class="form-group row">
+                                            <label class="col-sm-3 col-form-label">City</label>
+                                            {{ update_user.city }}
+                                        </div>
+                                        <div class="form-group row">
+                                            <label class="col-sm-3 col-form-label">State</label>
+                                            {{ update_user.state }}
+                                        </div>
+                                         <div class="form-group row">
+                                            <label class="col-sm-3 col-form-label">Zip Code</label>
+                                             {{ update_user.zip_code }}
+                                        </div>
+                                        <div class="form-group row">
+                                           <label  class="col-sm-3 col-form-label">User Type</label>
+                                            <div class="col-sm-9">
+                                            {{ update_user.user_type }}
+                                            </div>
+                                       </div>
+                                        <div class="form-group row show_body box 5">
+                                           <label  class="col-sm-3 col-form-label">Company</label>
+                                            <div class="col-sm-9">
+                                            {{ update_user.company }}
+                                            </div>
+                                       </div>
+                                        <div class="form-group row">
+                                            <label class="col-sm-3 col-form-label">Password</label>
+                                            {{ update_user.password }}
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-md-3">
+                                                <label>
+                                                    {{ update_user.allow_to_send_mail }} <span>Allow to send Email</span>
+                                                </label>
+                                            </div>
+                                        {% if user.user_type == 1 %}
+                                            <div class="col-md-1">
+                                            <label>
+                                                {{ update_user.is_active }} <span>Active</span>
+                                            </label>
+                                            </div>
+                                                <div class="col-md-2">
+                                            <label>
+                                                  {{ update_user.is_staff }} <span>Staff permission</span>
+                                            </label>
+                                                </div>
+                                        {% endif %}
+                                            <div class="col-md-3">
+                                            <label>
+                                                {{ update_user.approved_by_company_admin }} <span> Company Admin Approval </span>
+                                            </label>
+                                            </div>
+                                            {% if user.user_type == 1 %}
+                                              <div class="col-md-3">
+                                            <label>
+                                                  {{ update_user.approved_by_super_admin }} <span> Super Admin Approval </span>
+                                            </label>
+                                              </div>
+                                                <div class="col-md-3">
+                                            <label>
+                                                  {{ update_user.is_superuser }} <span>Super User Permission</span>
+                                            </label>
+                                                </div>
+                                            {% endif %}
+                                        </div>
+                                    <br>
+                                        <div class="form-group row">
+                                            <div class="col-md-3"></div>
+                                            <div class="col-sm-9 text-right">
+                                                <input type="submit" value="Submit" class="btn btn-success col-md-8 btn-block">
+                                            </div>
+                                        </div>
+                                </form>
+                            </div>
+                        </div>
+					</div>
+        </form>
+                        </div>
+        </div>
+    </div>
+
+        <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+<script>
+$(document).ready(function(){
+    $("#id_user_type").change(function(){
+        $(this).find("option:selected").each(function(){
+            var optionValue = $(this).attr("value");
+         //   if(optionValue==5){
+         //       $(".show_body").removeClass("company_show");
+         //       $(".show_body").addClass("company_hide");
+         //       $("#id_company")[0].selectedIndex = 0;
+         //   }
+            if(optionValue==1){
+                $(".show_body").removeClass("company_show");
+                $(".show_body").addClass("company_hide");
+                $("#id_company")[0].selectedIndex = 0;
+            }
+            else if(optionValue==4){
+                $(".show_body").removeClass("company_show");
+                $(".show_body").addClass("company_hide");
+                $("#id_company")[0].selectedIndex = 0;
+            }
+            else{
+                $(".show_body").removeClass("company_hide");
+                $(".show_body").addClass("company_show");
+            }
+        });
+    }).change();
+});
+</script>
+
+{% endblock %}

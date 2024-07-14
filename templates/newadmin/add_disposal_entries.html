@@ -1,0 +1,168 @@
+{% extends 'newadmin/base.html' %}
+{% load static %}
+{% block body %}
+     <!-- Daterange picker -->
+    <link href="{% static 'newadminstatic/vendor/bootstrap-daterangepicker/daterangepicker.css' %}" rel="stylesheet">
+    <!-- Clockpicker -->
+    <link href="{% static 'newadminstatic/vendor/clockpicker/css/bootstrap-clockpicker.min.css' %}" rel="stylesheet">
+    <!-- asColorpicker -->
+    <link href="{% static 'newadminstatic/vendor/jquery-asColorPicker/css/asColorPicker.min.css' %}" rel="stylesheet">
+    <!-- Material color picker -->
+    <link href="{% static 'newadminstatic/vendor/bootstrap-material-datetimepicker/css/bootstrap-material-datetimepicker.css' %}" rel="stylesheet">
+    <!-- Pick date -->
+    <link rel="stylesheet" href="{% static 'newadminstatic/vendor/pickadate/themes/default.css' %}">
+    <link rel="stylesheet" href="{% static 'newadminstatic/vendor/pickadate/themes/default.date.css' %}">
+    <!-- Custom Stylesheet -->
+    	<link href="{% static 'newadminstatic/vendor/bootstrap-select/dist/css/bootstrap-select.min.css' %}" rel="stylesheet">
+
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-xl-12 col-lg-12">
+                <form action="" method="post" enctype="multipart/form-data">
+                        <div class="card">
+                            <div class="card-header">
+                                <h4 class="card-title">CREATE DISPOSAL ENTRY</h4>
+                            </div>
+                            {% if message %}
+                                <p class="alert alert-danger" style="width: 190px; position: absolute;right: 10px;top: 10px;">{{ message }}</p>
+                            {% endif %}
+                            <div class="card-body">
+                                <div class="basic-form">
+                                    <form method="post" action="" enctype="multipart/form-data">
+                                        {% csrf_token %}
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                        <div class="form-group row">
+                                           <label  class="col-sm-3 col-form-label">Consignment</label>
+                                            <div class="col-sm-9">{{ disposal_form.consignment }}</div>
+                                       </div>
+                                         <div class="form-group row">
+                                           <label  class="col-sm-3 col-form-label">Company</label>
+                                             <div class="col-sm-9">{{ disposal_form.company }}</div>
+                                       </div>
+                                        <div class="form-group row">
+                                           <label  class="col-sm-3 col-form-label">Collected By</label>
+                                            <div class="col-sm-9">
+                                            {{ disposal_form.collected_by }}
+                                            </div>
+                                       </div>
+                                        <div class="form-group row">
+                                            <label class="col-sm-3 col-form-label">City</label>
+                                            <div class="col-sm-9">
+                                                {{ disposal_form.city }}
+                                            </div>
+                                        </div>
+                                        <div class="form-group row">
+                                            <label class="col-sm-3 col-form-label">Latitude</label>
+                                            <div class="col-sm-9">
+                                                {{ disposal_form.latitude }}
+                                            </div>
+                                        </div>
+                                        <div class="form-group row">
+                                            <label class="col-sm-3 col-form-label">Longitude</label>
+                                            <div class="col-sm-9">
+                                                {{ disposal_form.longitude }}
+                                            </div>
+                                        </div>
+                                    </div>
+                                        <div class="col-md-6">
+                                        <div class="form-group row">
+                                            <label class="col-sm-3 col-form-label">Vehicle Number</label>
+                                            <div class="col-sm-9">
+                                                {{ disposal_form.vehicle_number }}
+                                            </div>
+                                        </div>
+                                        <div class="form-group row">
+                                            <label class="col-sm-3 col-form-label">Weight(kg)</label>
+                                            <div class="col-sm-9">
+                                                {{ disposal_form.weight }}
+                                            </div>
+                                        </div>
+                                        <div class="form-group row">
+                                            <label class="col-sm-3 col-form-label">Unloading Date</label>
+                                            <div class="col-sm-9">
+                                                {{ disposal_form.unloading_date }}
+                                            </div>
+                                        </div>
+                                        <div class="input-group mb-3 row">
+                                            <div class="col-md-5">
+                                                <span class=" ">Loaded Vehicle Image</span>
+                                            </div>
+                                            <div class="col-md-7">
+                                                {{ disposal_form.loaded_vehicle_img }}
+                                            </div>
+                                        </div>
+
+                                        <div class="input-group mb-3 row">
+                                            <div class="col-md-5">
+                                                <span class=" ">Vehicle Number Image</span>
+                                            </div>
+                                            <div class="col-md-7">
+                                                {{ disposal_form.vehicle_number_img }}
+                                            </div>
+                                        </div>
+
+                                        <div class="input-group mb-3 row">
+                                            <div class="col-md-5">
+                                                <span class=" ">Weighment Slip Image</span>
+                                            </div>
+                                            <div class="col-md-7">
+                                                {{ disposal_form.weighment_slip_img }}
+                                            </div>
+                                        </div>
+                                        <div class="form-row align-items-center">
+                                            <div class="col-auto my-1">
+                                                <label class="mr-sm-2">Status</label>
+                                                {{ disposal_form.disposal_status }}
+
+                                            </div>
+                                        </div>
+                                        </div>
+                                        <div class="col-md-6"></div>
+                                        <div class="col-md-6">
+                                            <div class="form-group row mt-4 text-right">
+                                                <div class="col-sm-10">
+                                                    <button type="submit" class="btn btn-success btn-block">Submit</button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                        </form>
+					</div>
+    </div>
+    </div>
+
+{% endblock %}
+{% block script_link %}
+
+    <!-- Daterangepicker -->
+    <!-- momment js is must -->
+    <script src="{% static 'newadminstatic/vendor/moment/moment.min.js' %}"></script>
+    <!-- clockpicker -->
+    <script src="{% static 'newadminstatic/vendor/bootstrap-daterangepicker/daterangepicker.js' %}"></script>
+    <!-- Material color picker -->
+    <script src="{% static 'newadminstatic/vendor/bootstrap-material-datetimepicker/js/bootstrap-material-datetimepicker.js' %}"></script>
+
+    <!-- Daterangepicker -->
+    <script src="{% static 'newadminstatic/js/plugins-init/bs-daterange-picker-init.js' %}"></script>
+    <!-- Clockpicker init -->
+    <script src="{% static 'newadminstatic/js/plugins-init/clock-picker-init.js' %}"></script>
+    <!-- asColorPicker init -->
+    <script src="{% static 'newadminstatic/js/plugins-init/jquery-asColorPicker.init.js' %}"></script>
+    <!-- Material color picker init -->
+    <script src="{% static 'newadminstatic/js/plugins-init/material-date-picker-init.js' %}"></script>
+    <!-- Pickdate -->
+    <script src="{% static 'newadminstatic/js/plugins-init/pickadate-init.js' %}"></script>
+
+    <script>
+    $( document ).ready(function() {
+        $('#disposal_date').bootstrapMaterialDatePicker({
+            format: '',
+        });
+    });
+    </script>
+{% endblock %}

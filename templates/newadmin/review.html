@@ -1,0 +1,401 @@
+{% extends 'newadmin/base.html' %}
+{% load static %}
+
+{% block body %}
+    <style>
+        .image_mr img{
+            margin-bottom: 20px;
+        }
+        .remark_hide{
+            display: none;
+        }
+        .remark_show{
+            display: flex;
+        }
+    </style>
+    <form action="" method="post">
+    {% csrf_token %}
+    <div class="container-fluid image_mr">
+        <div class="row">
+            <div class="col-xl-6 col-lg-12">
+                <div class="card">
+                    <div class="card-header">
+                        <h4 class="card-title">COLLECTION ENTRIES</h4>
+                    </div>
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <p>Order No.</p>
+                            </div>
+                            <div class="col-md-6">
+                                <p>{{ collections.consignment.order_number}}</p>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <p>Consignment</p>
+                            </div>
+                            <div class="col-md-6">
+                                <p>{{ collections.consignment}}</p>
+                            </div>
+                        </div>
+                         <div class="row">
+                            <div class="col-md-6">
+                                <p>Company</p>
+                            </div>
+                            <div class="col-md-6">
+                                <p>{{ collections.company}}</p>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <p>Collected By</p>
+                            </div>
+                            <div class="col-md-6">
+                                <p>{{ collections.collected_by}}</p>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <p>City</p>
+                            </div>
+                            <div class="col-md-6">
+                                <p>{{ collections.city}}</p>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <p>Latitude</p>
+                            </div>
+                            <div class="col-md-6">
+                                <p>{{ collections.latitude}}</p>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <p>Longitude</p>
+                            </div>
+                            <div class="col-md-6">
+                                <p>{{ collections.longitude}}</p>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <p>Vehicle Number</p>
+                            </div>
+                            <div class="col-md-6">
+                                <p>{{ collections.vehicle_number}}</p>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <p>Weight</p>
+                            </div>
+                            <div class="col-md-6">
+                                <p>{{ collections.weight}} kg</p>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <p>Dispatch Date</p>
+                            </div>
+                            <div class="col-md-6">
+                                <p>{{ collections.dispatch_date}}</p>
+                            </div>
+                        </div>
+                        {% if not remark_instance %}
+                            {% if user.user_type == 1 or user.user_type == 4%}
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <p>Status</p>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <p>{{ collection_instance.status }}</p>
+                                    </div>
+                                </div>
+                            {% endif %}
+                            {% if user.user_type == 6 %}
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <p>Status</p>
+                                </div>
+                                <div class="col-md-6">
+                                    <p>{{ collections.get_status_display }}</p>
+                                </div>
+                            </div>
+                            {% endif %}
+                        {% else %}
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <p>Status</p>
+                                </div>
+                                <div class="col-md-6">
+                                    <p>{{ collections.get_status_display }}</p>
+                                </div>
+                            </div>
+
+                        {% endif %}
+                        <div class="row">
+                            <div class="col-md-6">
+                                <p>Photo of vehicle with waste without tarpaulin</p>
+                                <div class="mt-2">
+                                    <a href="{{ collections.empty_vehicle_img.thumbnail}}" target="_blank">
+                                    <img style="width: 200px; height: 200px;" src="{{ collections.empty_vehicle_img.thumbnail}}">
+                                    </a>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <p>Photo of loaded vehicle with number plate and tarpaulin</p>
+                                <div class="mt-2">
+                                    <a href="{{ collections.loaded_vehicle_img.thumbnail}}" target="_blank">
+                                    <img style="width: 200px; height: 200px;" src="{{ collections.loaded_vehicle_img.thumbnail}}">
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <p>Uploaded LR copy</p>
+                                <div class="mt-2">
+                                    <a href="{{ collections.lr_copy_img.thumbnail}}" target="_blank">
+                                    <img style="width: 200px; height: 200px;" src="{{ collections.lr_copy_img.thumbnail}}">
+                                    </a>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <p>Photo of vehicle number plate</p>
+                                <div class="mt-2">
+                                        <a href="{{ collections.vehicle_number_img.thumbnail}}" target="_blank">
+                                    <img style="width: 200px; height: 200px;" src="{{ collections.vehicle_number_img.thumbnail}}">
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <p>Uploaded delivery challan</p>
+                                <div class="mt-2">
+                                    <a href="{{ collections.delivery_challan_img.thumbnail}}" target="_blank">
+                                    <img style="width: 200px; height: 200px;" src="{{ collections.delivery_challan_img.thumbnail}}">
+                                    </a>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <p>Uploaded e-way bill copy</p>
+                                <div class="mt-2">
+                                    <a href="{{ collections.e_way_bill_img.thumbnail}}" target="_blank">
+                                    <img style="width: 200px; height: 200px;" src="{{ collections.e_way_bill_img.thumbnail}}">
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <p>Uploaded weighment slip</p>
+                                <div class="mt-2">
+                                    <a href="{{ collections.weighment_slip_img.thumbnail}}" target="_blank">
+                                    <img style="width: 200px; height: 200px;" src="{{ collections.weighment_slip_img.thumbnail}}">
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+    <div class="col-md-12">
+        <iframe src="https://maps.google.com/maps?q={{ collections.latitude }}, {{ collections.longitude }}&z=15&output=embed" style="width:100%; height: 100vh;" frameborder="0" style="border:0"></iframe>
+    </div>
+
+
+                    </div>
+                </div>
+            </div>
+            {% if disposals %}
+            <div class="col-xl-6 col-lg-12">
+                <div class="card">
+                    <div class="card-header">
+                        <h4 class="card-title">DISPOSAL ENTRIES</h4>
+                    </div>
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <p>Order No.</p>
+                            </div>
+                            <div class="col-md-6">
+                                <p>{{ disposals.consignment.order_number}}</p>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <p>Consignment</p>
+                            </div>
+                            <div class="col-md-6">
+                                <p>{{ disposals.consignment}}</p>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <p>Company</p>
+                            </div>
+                            <div class="col-md-6">
+                                <p>{{ disposals.company}}</p>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <p>Collected By</p>
+                            </div>
+                            <div class="col-md-6">
+                                <p>{{ disposals.collected_by}}</p>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <p>City </p>
+                            </div>
+                            <div class="col-md-6">
+                                <p>{{ disposals.city}}</p>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <p>Latitude</p>
+                            </div>
+                            <div class="col-md-6">
+                                <p>{{ disposals.latitude}}</p>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <p>Longitude</p>
+                            </div>
+                            <div class="col-md-6">
+                                <p>{{ disposals.longitude}}</p>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <p>Vehicle Number</p>
+                            </div>
+                            <div class="col-md-6">
+                                <p>{{ disposals.vehicle_number}}</p>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <p>Weight</p>
+                            </div>
+                            <div class="col-md-6">
+                                <p>{{ disposals.weight}} kg</p>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <p>Unloading Date</p>
+                            </div>
+                            <div class="col-md-6">
+                                <p>{{ disposals.unloading_date}}</p>
+                            </div>
+                        </div>
+                        {% if not remark_instance %}
+
+                            {% if user.user_type == 1 or user.user_type == 4%}
+                            <div class="row">
+                            <div class="col-md-6">
+                                <p>Status</p>
+                            </div>
+                            <div class="col-md-6">
+                                <p>{{ disposal_instance.disposal_status}}</p>
+                            </div>
+                        </div>
+                            {% endif %}
+
+                            {% if user.user_type == 6 %}
+                            <div class="row">
+                            <div class="col-md-6">
+                                <p>Status</p>
+                            </div>
+                            <div class="col-md-6">
+                                <p>{{ disposals.get_disposal_status_display }}</p>
+                            </div>
+                        </div>
+                            {% endif %}
+
+                            {% if user.user_type == 4 %}
+                            <div class="row show_body" >
+                                <div class="col-md-3">
+                                    <p>Remark</p>
+                                </div>
+                                <div class="col-md-9">
+                                    <p>{{ remark.remark }} </p>
+                                </div>
+                            </div>
+                                {% endif %}
+                            {% if user.user_type == 4 %}
+                                <div class="form-group row">
+                                    <div class="col-sm-10">
+                                        <input type="submit" value="Submit" class="btn btn-primary">
+                                    </div>
+                                </div>
+                            {% endif %}
+                            {% else %}
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <p>Status</p>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <p>{{ disposals.get_disposal_status_display }}</p>
+                                    </div>
+                                </div>
+                                <h4>Remark Given</h4>
+                                <div style="border: 1px solid #ddd; padding: 15px 20px; color:orangered;">
+                                    {{ remark_instance.remark }}
+                                </div>
+                        {% endif %}
+                    <div><br></div>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <p>Photo of material</p>
+                            </div>
+                            <div class="col-md-6" >
+                                <a href="{{ disposals.loaded_vehicle_img.thumbnail}}" target="_blank">
+                                <img  style="width: 200px; height: 200px;" src="{{ disposals.loaded_vehicle_img.thumbnail}}">
+                                </a>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <p>Photo of vehicle number plate</p>
+                            </div>
+                            <div class="col-md-6">
+                                <a href="{{ disposals.vehicle_number_img.thumbnail }}" target="_blank">
+                                <img style="width: 200px; height: 200px;" src="{{ disposals.vehicle_number_img.thumbnail }}">
+                                </a>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <p>Uploaded weighment slip</p>
+                            </div>
+                            <div class="col-md-6">
+                                <a href="{{ disposals.weighment_slip_img.thumbnail}}" target="_blank">
+                                <img style="width: 200px; height: 200px;" src="{{ disposals.weighment_slip_img.thumbnail}}">
+                                </a>
+                            </div>
+                        </div>
+    <div class="col-md-12">
+        <iframe src="https://maps.google.com/maps?q={{ disposals.latitude }}, {{ disposals.longitude }}&z=15&output=embed" style="width:100%; height: 100vh;" frameborder="0" style="border:0"></iframe>
+    </div>
+
+                    </div>
+                </div>
+            </div>
+                {% else %}
+                <div class="col-xl-6 col-lg-12">
+                    <p class="alert alert-danger ">Disposal Entry Not Exists</p>
+                </div>
+            {% endif %}
+        </div>
+    </div>
+    </form>
+
+
+
+{% endblock %}

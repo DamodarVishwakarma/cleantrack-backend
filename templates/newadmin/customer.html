@@ -1,0 +1,46 @@
+{% extends 'newadmin/base.html' %}
+{% load static %}
+{% block body %}
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-xl-12 col-xxl-12 col-lg-12 col-md-12">
+                        <div class="card">
+                           <div class="card-header border-0 pb-0">
+                              <h4 class="card-title">ORDERS AND CONSIGNMENTS</h4>
+                           </div>
+                           <div class="card-body">
+                              <div class="table-responsive">
+                                 <table id="example" class="display" style="min-width: 845px">
+                                    <thead>
+                                       <tr>
+                                          <th>
+                                             S.No
+                                          </th>
+                                          <th><strong>ORDER NO.</strong></th>
+                                          <th><strong>CONSIGNMENT NO.</strong></th>
+                                          <th><strong>COLLECTION COMPANY</strong></th>
+                                          <th><strong>DISPOSAL COMPANY</strong></th>
+                                          <th><strong>VIEW</strong></th>
+                                       </tr>
+                                    </thead>
+                                                <tbody>
+                                                {% for collection in collections reversed%}
+                                                <tr>
+                                                    <td>{{ forloop.counter }}</td>
+                                                    <td>{{ collection.consignment.order_number }}</td>
+                                                    <td>{{ collection.consignment }}</td>
+                                                    <td>{{ collection.consignment.order_number.collection_agency }}</td>
+                                                    <td>{{ collection.consignment.order_number.disposal_agency }}</td>
+                                                    <td><a href="{% url 'review'  collection.consignment %}" class="btn btn-warning shadow btn-xs sharp mr-1"><i class="fa fa-eye"></i></a></td>
+
+                                                </tr>
+                                                {% endfor %}
+                                                </tbody>
+                                 </table>
+                              </div>
+                           </div>
+                        </div>
+                     </div>
+        </div>
+    </div>
+{% endblock %}

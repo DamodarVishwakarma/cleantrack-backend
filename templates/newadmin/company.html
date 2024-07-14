@@ -1,0 +1,88 @@
+{% extends 'newadmin/base.html' %}
+{% load static %}
+{% block body %}
+    <div class="container-fluid">
+                <div class="row">
+                <div class="col-xl-12 col-xxl-12">
+						<div class="row">
+                            <div class="col-xl-12 col-xxl-12 col-lg-12 col-md-12">
+
+								<div class="card">
+									<div class="card-body">
+                                      <div style="margin-bottom: 20px;">
+                                            <h4 style="display: inline-block">COMPANIES</h4>
+                                          {% if  user.user_type == 1 %}
+                                            <a style="float: right;" href="{% url "create_company" %}" class="btn btn-primary btn-md">Create Company</a>
+                                          {% endif %}
+                                      </div>
+                                    	<div class="table-responsive">
+											<table id="example" class="display" style="min-width: 845px">
+												<thead>
+													<tr>
+														<th>
+															S.NO
+														</th>
+														<th><strong>NAME</strong></th>
+														<th><strong>CITY</strong></th>
+														<th><strong>COMPANY TYPE</strong></th>
+														<th><strong>COMPANY ID</strong></th>
+														<th><strong>STATUS</strong></th>
+														<th style="width:85px;"><strong>EDIT</strong></th>
+													</tr>
+												</thead>
+												<tbody>
+                                                {% for company in companies reversed %}
+													<tr>
+														<td>
+															{{ forloop.counter }}
+														</td>
+														<td><a href="{% url 'update_company' company.id %}"><b>{{ company.name }}</b></a></td>
+														<td>{{ company.city }}</td>
+														<td>{{ company.get_company_type_display}}</td>
+														<td>{{ company.id}}</td>
+														<td class="recent-stats align-items-center">
+                                                            {% if company.company_status == 1 %}
+                                                                <i class="fa fa-circle text-success mr-1"></i> {{ company.get_company_status_display }}
+                                                                {% else %}
+                                                                <i class="fa fa-circle text-danger mr-1"></i>{{ company.get_company_status_display }}
+                                                            {% endif %}
+                                                        </td>
+														<td>
+															<a href="{% url 'update_company' company.id %}" class="btn btn-primary shadow btn-xs sharp mr-1"><i class="fa fa-pencil"></i></a>
+															{% if  user.user_type == 1 %}
+                                                            <a href="#" class="btn btn-danger shadow btn-xs sharp" data-toggle="modal" data-target="#del_company{{ company.id }}"><i class="fa fa-trash"></i></a>
+														    {% endif %}
+                                                        </td>
+													</tr>
+
+{#                                                     <!-- Modal -->#}
+                                                    <div class="modal fade" id="del_company{{ company.id }}">
+                                                        <div class="modal-dialog modal-dialog-centered" role="document">
+                                                            <div class="modal-content">
+                                                                <div class="modal-header">
+                                                                    <h5 class="modal-title">Delete Company</h5>
+                                                                    <button type="button" class="close" data-dismiss="modal"><span>&times;</span>
+                                                                    </button>
+                                                                </div>
+                                                                <div class="modal-body">
+                                                                    <p>Are you sure you want to Delete Company ? </p>
+                                                                </div>
+                                                                <div class="modal-footer">
+                                                                    <button type="button" class="btn btn-danger light" data-dismiss="modal">Close</button>
+                                                                    <a href="{% url 'delete_company' company.id %}" class="btn btn-danger">Delete</a>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                {% endfor %}
+												</tbody>
+											</table>
+										</div>
+									</div>
+								</div>
+							</div>
+                        </div>
+                </div>
+                </div>
+    </div>
+{% endblock %}

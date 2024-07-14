@@ -1,0 +1,467 @@
+{% extends 'newadmin/base.html' %}
+{% load static %}
+{% block body %}
+			<div class="container-fluid">
+                <div class="row">
+					<div class="col-xl-9 col-xxl-12">
+						<div class="row">
+                            {% if user.user_type != 5 %}
+							<div class="col-xl-2 col-xxl-2 col-lg-6 col-sm-6">
+								<div class="card overflow-hidden">
+									<div class="card-body pb-0 px-4 pt-4">
+										<div class="row">
+											<div class="col">
+												<h5 class="mb-1">{{ total_users }}</h5>
+												<span class="text-success">Total Users</span>
+											</div>
+										</div>
+									</div>
+									<div class="chart-wrapper">
+										<canvas id="areaChart_2" class="chartjs-render-monitor" height="90"></canvas>
+									</div>
+								</div>
+							</div>
+                            {% endif %}
+							<div class="col-xl-3 col-xxl-3 col-lg-6 col-sm-6">
+								<div class="card bg-success	overflow-hidden">
+									<div class="card-body pb-0 px-4 pt-4">
+										<div class="row">
+											<div class="col">
+												<h5 class="text-white mb-1">{{ total_orders }}</h5>
+												<span class="text-white">Total Orders</span>
+											</div>
+										</div>
+									</div>
+									<div class="chart-wrapper" style="width:100%">
+										<span class="peity-line" data-width="100%">6,2,8,4,3,8,4,3,6,5,9,2</span>
+									</div>
+								</div>
+							</div>
+							<div class="col-xl-3 col-xxl-3 col-lg-6 col-sm-6">
+								<div class="card bg-primary	overflow-hidden">
+									<div class="card-body pb-0 px-4 pt-4">
+										<div class="row">
+											<div class="col">
+												<h5 class="text-white mb-1">{{ total_consignment }}</h5>
+												<span class="text-white">Total Consignments</span>
+											</div>
+										</div>
+									</div>
+									<div class="chart-wrapper" style="width:100%">
+										<span class="peity-line2" data-width="100%">9,2,8,4,3,8,4,3,6,5,9,2</span>
+									</div>
+								</div>
+							</div>
+							<div class="col-xl-4 col-xxl-4 col-lg-6 col-sm-6">
+								<div class="card overflow-hidden">
+									<div class="card-body px-4 py-4">
+										<h5 class="mb-3"><small class="text-primary">Consignment Status</small></h5>
+										<div class="chart-point">
+											<div class="check-point-area">
+												<canvas id="ShareProfit2"></canvas>
+											</div>
+											<ul class="chart-point-list">
+												<li><i class="fa fa-circle text-warning mr-1"></i> {{ pending }}% Pending</li>
+												<li><i class="fa fa-circle text-success mr-1"></i> {{ approve }}% Approved</li>
+												<li><i class="fa fa-circle text-danger mr-1"></i> {{ reject }}% Rejected</li>
+											</ul>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="col-xl-6 col-xxl-12 col-lg-12 col-md-12">
+						<div id="user-activity" class="card">
+							<div class="card-header border-0 pb-0 d-sm-flex d-block">
+								<div>
+									<h4 class="card-title">History of ( <span id="graph_datejs" style="color:#777;"> Today</span> )</h4>
+{#									<p class="mb-1">Lorem Ipsum is simply dummy text of the printing</p>#}
+								</div>
+								<div class="card-action">
+									<ul class="nav nav-tabs" role="tablist">
+										<li class="nav-item" id="dayclick">
+											<a class="nav-link active" data-toggle="tab" href="#user" role="tab">
+												Day
+											</a>
+										</li>
+										<!-- <li class="nav-item">
+											<a class="nav-link" data-toggle="tab" href="#session" role="tab">
+												Week
+											</a>
+										</li> -->
+										<li class="nav-item" id="monthclick">
+											<a class="nav-link" data-toggle="tab" href="#bounce" role="tab">
+												Month
+											</a>
+										</li>
+										<li class="nav-item"id="yearclick">
+											<a class="nav-link" data-toggle="tab" href="#session-duration" role="tab">
+												Year
+											</a>
+										</li>
+									</ul>
+								</div>
+							</div>
+							<div class="card-body">
+								<div class="tab-content" id="myTabContent">
+									<div class="tab-pane fade show active" id="user" role="tabpanel">
+										<canvas id="activity" class="chartjs"></canvas>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+			   </div>
+            </div>
+{% endblock %}
+
+{% block script_link %}
+<script>
+	if(jQuery('#ShareProfit2').length > 0 ){
+		//doughut chart
+		const ShareProfit2 = document.getElementById("ShareProfit2").getContext('2d');
+		// ShareProfit2.height = 100;
+		new Chart(ShareProfit2, {
+			type: 'doughnut',
+			data: {
+				defaultFontFamily: 'Poppins',
+				datasets: [{
+					data: [{{ approve }}, {{ pending }}, {{reject}}],
+					borderWidth: 3,
+					borderColor: "rgba(255, 255, 255, 1)",
+					backgroundColor: [
+
+						"rgba(41, 200, 112, 1)",
+						"rgba(255, 159, 0, 1)",
+						"rgba(242, 87, 103, 1)",
+					],
+					hoverBackgroundColor: [
+						"rgba(41, 200, 112, .9)",
+						"rgba(255, 159, 0, .9)",
+						"rgba(242, 87, 103, 0.9)",
+					]
+
+				}],
+
+			},
+			options: {
+				weight: 1,
+				 cutoutPercentage: 65,
+				responsive: true,
+				maintainAspectRatio: false,
+                tooltips: {enabled: false},
+                hover: {mode: null},
+			}
+		});
+	}
+   /*======== 16. ANALYTICS - ACTIVITY CHART ========*/
+        var datetimenow = new Date();
+        var localtime= datetimenow.toLocaleString('en-US', { hour12: false });
+        localtime=localtime.split(" ")[1];
+        datetimenow=datetimenow.toLocaleDateString();
+        var datesplitjs = datetimenow.split("/");
+        getyearjs=datesplitjs[2];
+        getmonthjs=datesplitjs[0];
+        getdayjs=datesplitjs[1];
+
+    if(getmonthjs<10){getmonthjs=0+getmonthjs;}
+    var json_datajs=[
+        {% for collection in bar_chart_data %}
+            {%  if collection.company.company_type == 1 %}
+                '{{ collection.dispatch_date|escapejs }}',
+                {% else %}
+                '{{ collection.unloading_date|escapejs }}',
+            {% endif %}
+        {% endfor %}];
+    var daycount=0;
+    var monthcount=0;
+    var yearcount=0;
+
+    //month variables
+    var monthday1_2=0;
+    var monthday2_4=0;
+    var monthday4_6=0;
+    var monthday6_8=0;
+    var monthday8_10=0;
+    var monthday10_12=0;
+    var monthday12_14=0;
+    var monthday14_16=0;
+    var monthday16_18=0;
+    var monthday18_20=0;
+    var monthday20_22=0;
+    var monthday22_24=0;
+    var monthday24_26=0;
+    var monthday26_28=0;
+    var monthday28_30=0;
+    var monthday31=0;
+    var yearmonth1=0;
+    var yearmonth2=0;
+    var yearmonth3=0;
+    var yearmonth4=0;
+    var yearmonth5=0;
+    var yearmonth6=0;
+    var yearmonth7=0;
+    var yearmonth8=0;
+    var yearmonth9=0;
+    var yearmonth10=0;
+    var yearmonth11=0;
+    var yearmonth12=0;
+
+    // time variables
+    var daytime1=0;
+    var daytime2=0;
+    var daytime3=0;
+    var daytime4=0;
+    var daytime5=0;
+    var daytime6=0;
+    var daytime7=0;
+    var daytime8=0;
+    var daytime9=0;
+    var daytime10=0;
+    var daytime11=0;
+    var daytime12=0;
+    var daytime13=0;
+    var daytime14=0;
+    var daytime15=0;
+    var daytime16=0;
+    var daytime17=0;
+    var daytime18=0;
+    var daytime19=0;
+    var daytime20=0;
+    var daytime21=0;
+    var daytime22=0;
+    var daytime23=0;
+    var daytime0=0;
+
+    for (i=0;i<json_datajs.length; i++){
+        colletionobj=json_datajs[i];
+        var colletionsplitdata=colletionobj.split(" ");
+        colletionsplitdate=colletionsplitdata[0].split("-")
+        collectiontime=colletionsplitdata[1].split(".")
+        collectionsplittime=collectiontime[0].split(":")
+        if(colletionsplitdate[0] == new Date().getFullYear() && colletionsplitdate[1]==getmonthjs){
+                if(colletionsplitdate[2]==1 || colletionsplitdate[2]==2 ){monthday1_2+=1;}
+                if(colletionsplitdate[2]==3 || colletionsplitdate[2]== 4){monthday2_4+=1;}
+                if(colletionsplitdate[2]==5 || colletionsplitdate[2]== 6){monthday4_6+=1;}
+                if(colletionsplitdate[2]==7 || colletionsplitdate[2]== 8){monthday6_8+=1;}
+                if(colletionsplitdate[2]==9 || colletionsplitdate[2]== 10){monthday8_10+=1;}
+                if(colletionsplitdate[2]==11 || colletionsplitdate[2]== 12){monthday10_12+=1;}
+                if(colletionsplitdate[2]==13 || colletionsplitdate[2]== 14){monthday12_14+=1;}
+                if(colletionsplitdate[2]==15 || colletionsplitdate[2]== 16){monthday14_16+=1;}
+                if(colletionsplitdate[2]==17 || colletionsplitdate[2]== 18){monthday16_18+=1;}
+                if(colletionsplitdate[2]==19 || colletionsplitdate[2]== 20){monthday18_20+=1;}
+                if(colletionsplitdate[2]==21 || colletionsplitdate[2]== 22){monthday20_22+=1;}
+                if(colletionsplitdate[2]==23 || colletionsplitdate[2]== 24){monthday22_24+=1;}
+                if(colletionsplitdate[2]==25 || colletionsplitdate[2]== 26){monthday24_26+=1;}
+                if(colletionsplitdate[2]==27 || colletionsplitdate[2]== 28){monthday26_28+=1;}
+                if(colletionsplitdate[2]==29 || colletionsplitdate[2]== 30){monthday28_30+=1;}
+                if(colletionsplitdata[2]==31){monthday31+=1;}
+
+        }
+        if(colletionsplitdate[0]==getyearjs ){
+            if(colletionsplitdate[1]==1){yearmonth1+=1;}
+            if(colletionsplitdate[1]==2){yearmonth2+=1;}
+            if(colletionsplitdate[1]==3){yearmonth3+=1;}
+            if(colletionsplitdate[1]==4){yearmonth4+=1;}
+            if(colletionsplitdate[1]==5){yearmonth5+=1;}
+            if(colletionsplitdate[1]==6){yearmonth6+=1;}
+            if(colletionsplitdate[1]==7){yearmonth7+=1;}
+            if(colletionsplitdate[1]==8){yearmonth8+=1;}
+            if(colletionsplitdate[1]==9){yearmonth9+=1;}
+            if(colletionsplitdate[1]==10){yearmonth10+=1;}
+            if(colletionsplitdate[1]==11){yearmonth11+=1;}
+            if(colletionsplitdate[1]==12){yearmonth12+=1;}
+        }
+
+        var localtimelist=localtime.split(":");
+        if(colletionsplitdate[0] == new Date().getFullYear() && colletionsplitdate[1]==getmonthjs && colletionsplitdate[2]==getdayjs){
+            if(collectionsplittime[0]==01){daytime1+=1;}
+            if(collectionsplittime[0]==02){daytime2+=1;}
+            if(collectionsplittime[0]==03){daytime3+=1;}
+            if(collectionsplittime[0]==04){daytime4+=1;}
+            if(collectionsplittime[0]==05){daytime5+=1;}
+            if(collectionsplittime[0]==06){daytime6+=1;}
+            if(collectionsplittime[0]==07){daytime7+=1;}
+            if(collectionsplittime[0]==08){daytime8+=1;}
+            if(collectionsplittime[0]==09){daytime9+=1;}
+            if(collectionsplittime[0]==10){daytime10+=1;}
+            if(collectionsplittime[0]==11){daytime11+=1;}
+            if(collectionsplittime[0]==12){daytime12+=1;}
+            if(collectionsplittime[0]==13){daytime13+=1;}
+            if(collectionsplittime[0]==14){daytime14+=1;}
+            if(collectionsplittime[0]==15){daytime15+=1;}
+            if(collectionsplittime[0]==16){daytime16+=1;}
+            if(collectionsplittime[0]==17){daytime17+=1;}
+            if(collectionsplittime[0]==18){daytime18+=1;}
+            if(collectionsplittime[0]==19){daytime19+=1;}
+            if(collectionsplittime[0]==20){daytime20+=1;}
+            if(collectionsplittime[0]==21){daytime21+=1;}
+            if(collectionsplittime[0]==22){daytime22+=1;}
+            if(collectionsplittime[0]==23){daytime23+=1;}
+            if(collectionsplittime[0]==24){daytime0+=1;}
+        }
+    }
+    var activity = document.getElementById("activity");
+    if (activity !== null) {
+        var activityData = [{
+                first: [daytime0,daytime1, daytime2, daytime3, daytime4, daytime5, daytime6, daytime7, daytime8, daytime9,
+                    daytime10, daytime11, daytime12, daytime13, daytime14,daytime15,daytime16,daytime17,daytime18,
+                daytime19, daytime20, daytime21, daytime22, daytime23]
+            },
+            {
+                first: [monthday1_2, monthday2_4, monthday4_6, monthday6_8, monthday8_10,
+                    monthday10_12, monthday12_14, monthday14_16, monthday16_18, monthday18_20,
+                    monthday20_22, monthday22_24, monthday24_26, monthday26_28, monthday28_30, monthday31]
+            },
+            {
+            first: [yearmonth1, yearmonth2, yearmonth3, yearmonth4, yearmonth5, yearmonth6, yearmonth7,
+                yearmonth8, yearmonth9, yearmonth10, yearmonth11, yearmonth12]
+        },
+        ];
+        activity.height = 300;
+
+            var config = {
+                type: "bar",
+                data: {
+                    labels: ['00','01','02','03','04','05',
+                        '06','07','08','09','10','11',
+                        '12','13','14','15','16','17',
+                        '18','19','20','21','22',
+                        '23',
+                    ],
+
+                    datasets: [
+                        {
+                            label: "Consignment",
+                            data: [daytime0,daytime1, daytime2, daytime3, daytime4, daytime5, daytime6, daytime7, daytime8, daytime9,
+                    daytime10, daytime11, daytime12, daytime13, daytime14,daytime15,daytime16,daytime17,daytime18,
+                daytime19, daytime20, daytime21, daytime22, daytime23],
+                            borderColor: 'rgba(26, 51, 213, 1)',
+                            borderWidth: "0",
+                            backgroundColor: 'rgba(58, 122, 254, 1)'
+
+                        }
+                    ]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+
+                    legend: {
+                        display: false
+                    },
+                    scales: {
+                        xAxes: [{
+                            gridLines: {
+                                display: false,
+                                zeroLineColor: "transparent"
+                            },
+                            ticks: {
+                                stepSize: 10,
+                                fontColor: "#000",
+                                fontFamily: "Nunito, sans-serif"
+                            }
+                        }],
+                        yAxes: [{
+                            gridLines: {
+                                display: false,
+                                zeroLineColor: "transparent"
+                            },
+                            ticks: {
+                                stepSize: 20,
+                                fontColor: "#000",
+                                fontFamily: "Nunito, sans-serif",
+                                beginAtZero: false,
+                                min:0,
+                                stepSize:20
+                            }
+                        }]
+                    },
+                    tooltips: {
+                        mode: "index",
+                        intersect: false,
+                        titleFontColor: "#888",
+                        bodyFontColor: "#555",
+                        titleFontSize: 12,
+                        bodyFontSize: 15,
+                        backgroundColor: "rgba(256,256,256,0.95)",
+                        displayColors: true,
+                        xPadding: 10,
+                        yPadding: 7,
+                        borderColor: "rgba(220, 220, 220, 0.9)",
+                        borderWidth: 2,
+                        caretSize: 6,
+                        caretPadding: 10
+                    }
+                }
+            };
+        var monthbtn=false;
+        var yearbtn=false;
+        var dayhbtn=false;
+        $('#monthclick').click(function (){
+            monthbtn=true;
+            yearbtn=false;
+            dayhbtn=false;
+        });
+        $('#yearclick').click(function (){
+            monthbtn=false;
+            yearbtn=true;
+            dayhbtn=false;
+        });
+        $('#dayclick').click(function (){
+            monthbtn=false;
+            yearbtn=false;
+            dayhbtn=true;
+        });
+
+            var ctx = document.getElementById("activity").getContext("2d");
+            var myLine = new Chart(ctx, config);
+            var items = document.querySelectorAll("#user-activity .nav-tabs .nav-item");
+            items.forEach(function (item, index) {
+                item.addEventListener("click", function () {
+                    if (yearbtn) {
+                        config.data.labels = ['January', 'February', 'March', 'April', 'May',
+                            'June', 'July', 'August', 'September', 'October', 'November', 'December'];
+                        var history_year=datesplitjs[2];
+                        document.getElementById("graph_datejs").innerHTML=history_year+" to Current";
+                    }
+                    else if (monthbtn) {
+                        config.data.labels = ['01 - 02', '03 - 04 ', '05 - 06',
+                            '07 - 08', '09 - 10 ','11 - 12', '13 - 14', '15 - 16',
+                            '17 - 18', '19 - 20', '21 - 22', '23 - 24','25 - 26',
+                            '27 - 28', '29 - 30','31'];
+                          var month_en = new Array();
+                          month_en[0] = "January";
+                          month_en[1] = "February";
+                          month_en[2] = "March";
+                          month_en[3] = "April";
+                          month_en[4] = "May";
+                          month_en[5] = "June";
+                          month_en[6] = "July";
+                          month_en[7] = "August";
+                          month_en[8] = "September";
+                          month_en[9] = "October";
+                          month_en[10] = "November";
+                          month_en[11] = "December";
+
+                          var current_date = new Date();
+                          document.getElementById("graph_datejs").innerHTML=month_en[current_date.getMonth()]+" to Current";
+                     }
+                    else{
+                        config.data.labels = ['00','01','02','03','04','05',
+                        '06','07','08','09','10','11',
+                        '12','13','14','15','16','17',
+                        '18','19','20','21','22',
+                        '23',
+                    ];
+                        document.getElementById("graph_datejs").innerHTML="Today";
+                    }
+                    config.data.datasets[0].data = activityData[index].first;
+                    myLine.update();
+                });
+            });
+
+    }
+</script>
+{% endblock %}

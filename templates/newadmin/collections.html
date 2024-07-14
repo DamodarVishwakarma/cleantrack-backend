@@ -1,0 +1,122 @@
+{% extends 'newadmin/base.html' %}
+{% load static %}
+{% block body %}
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-xl-12 col-xxl-12 col-lg-12 col-md-12">
+								<div class="card">
+									<div class="card-header border-0 pb-0">
+										<h4 class="card-title">COLLECTIONS</h4>
+                                        <div class="text-right">
+                                         {% if  user.user_type == 1 %}
+                                            <a href="{% url "create_collection" %}" class="btn btn-primary">Create Collection Entry</a>
+                                        {% endif %}
+                                        </div>
+									</div>
+
+									<div class="card-body">
+										<div class="table-responsive">
+											<table id="example" class="display" style="min-width: 845px">
+												<thead>
+													<tr>
+														<th>
+															S.NO
+														</th>
+														<th><strong>CONSIGNMENT</strong></th>
+														<th><strong>COMPANY</strong></th>
+														<th><strong>COLLECTED BY</strong></th>
+														<th><strong>DISPATCH DATE</strong></th>
+														<th><strong>CITY</strong></th>
+														<th><strong>VEHICLE NUMBER</strong></th>
+														<th><strong>WEIGHT (kg)</strong></th>
+                                                        {% if user.user_type == 1 or user.user_type == 5 %}
+														<th><strong>STATUS</strong></th>
+                                                            {% elif user.user_type == 4 %}
+                                                            <th><strong>COLLECTION STATUS</strong></th>
+                                                            <th><strong>DISPOSAL STATUS</strong></th>
+                                                        {% endif %}
+
+                                                        {% if  user.user_type == 1 %}
+														<th style="width:85px;"><strong>EDIT</strong></th>
+                                                            {% elif user.user_type == 4 or user.user_type == 5 or user.user_type == 6%}
+                                                            <th style="width:85px;"><strong>REVIEW</strong></th>
+                                                        {% endif %}
+													</tr>
+												</thead>
+												<tbody>
+                                                    {% for collection in collections reversed %}
+													<tr>
+														<td>
+															{{ forloop.counter }}
+														</td>
+														<td>
+                                                            {% if user.user_type == 1 %}
+                                                            <a href="{% url 'update_collection' collection.id %}"><b>{{ collection.consignment }}</b></a>
+                                                                {% elif user.user_type == 4 or user.user_type == 5 or user.user_type == 6%}
+                                                            <a href="{% url 'review'  collection.consignment  %}"><b>{{ collection.consignment }}</b></a>
+                                                            {% endif %}
+                                                        </td>
+														<td>{{ collection.company }}</td>
+														<td>{{ collection.collected_by}}</td>
+														<td>{{ collection.dispatch_date}}</td>
+														<td>{{ collection.city}}</td>
+														<td>{{ collection.vehicle_number}}</td>
+														<td>{{ collection.weight}}</td>
+                                                        {% if user.user_type == 1 or user.user_type == 5 or user.user_type == 4%}
+														<td>{{ collection.get_status_display}}</td>
+                                                        {% endif %}
+                                                    {% if user.user_type == 4 %}
+                                                    <td>
+{#                                                        {% if not collection.disposal_entry.diaposal_status %}#}
+
+                                                            {{ collection.disposal_entry.get_disposal_status_display }}
+{#                                                        {% elif collection.disposal_entry.diaposal_status  %}#}
+
+{#                                                            {% endif %}#}
+{#                                                                    {% if disposal_entry.disposal_status %}#}
+{#                                                                        {{ disposal_entry.disposal_status }}#}
+{#                                                                    {% else %}#}
+{#                                                                            dhjksdn#}
+{#                                                                    {% endif %}#}
+
+                                                    </td>
+                                                    {% endif %}
+														<td>
+                                                            {% if  user.user_type == 1 %}
+															<a href="{% url 'update_collection' collection.id %}" class="btn btn-primary shadow btn-xs sharp mr-1"><i class="fa fa-pencil"></i></a>
+                                                            <a href="#" class="btn btn-danger shadow btn-xs sharp" data-toggle="modal" data-target="#del_collection_entry{{ collection.id }}"><i class="fa fa-trash"></i></a>
+														    {% elif user.user_type == 4 or user.user_type == 5 or user.user_type == 6 %}
+															<a href="{% url 'review'  collection.consignment %}" class="btn btn-warning shadow btn-xs sharp mr-1"><i class="fa fa-eye"></i></a>
+                                                            {% endif %}
+                                                         </td>
+
+													</tr>
+                                                        <!-- Modal -->
+                                                    <div class="modal fade" id="del_collection_entry{{ collection.id }}">
+                                                        <div class="modal-dialog modal-dialog-centered" role="document">
+                                                            <div class="modal-content">
+                                                                <div class="modal-header">
+                                                                    <h5 class="modal-title">Delete Collection</h5>
+                                                                    <button type="button" class="close" data-dismiss="modal"><span>&times;</span>
+                                                                    </button>
+                                                                </div>
+                                                                <div class="modal-body">
+                                                                    <p>Are you sure you want to Delete Company ? </p>
+                                                                </div>
+                                                                <div class="modal-footer">
+                                                                    <button type="button" class="btn btn-danger light" data-dismiss="modal">Close</button>
+                                                                    <a href="{% url 'delete_collection_entry' collection.consignment %}" class="btn btn-danger">Delete</a>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                {% endfor %}
+												</tbody>
+											</table>
+										</div>
+									</div>
+								</div>
+							</div>
+        </div>
+    </div>
+{% endblock %}

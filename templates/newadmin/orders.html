@@ -1,0 +1,88 @@
+
+    {% extends 'newadmin/base.html' %}
+    {% load static %}
+    {% block body %}
+
+            <!-- row -->
+			<div class="container-fluid">
+                <div class="row">
+
+					<div class="col-xl-12 col-xxl-12">
+						<div class="row">
+							<div class="col-xl-12 col-xxl-12 col-lg-12 col-md-12">
+								<div class="card">
+									<div class="card-body">
+                                        <div style="margin-bottom: 20px;">
+                                            <h4 style="display: inline-block">ORDERS</h4>
+                                            <a style="float: right;" href="{% url "create_order" %}" class="btn btn-primary btn-md">Create Order</a>
+                                        </div>
+										<div class="table-responsive">
+											<table id="example" class="display" style="min-width: 845px">
+												<thead>
+													<tr>
+														<th>
+															S.NO
+														</th>
+														<th><strong>ORDER</strong></th>
+														<th><strong>WEIGHT (kg)</strong></th>
+														<th><strong>COLLECTION AGENCY</strong></th>
+														<th><strong>DISPOSAL AGENCY</strong></th>
+														<th><strong>CUSTOMER</strong></th>
+														<th><strong>STATUS</strong></th>
+														<th style="width:85px;"><strong>EDIT</strong></th>
+													</tr>
+												</thead>
+												<tbody>
+                                                {% for orders in order reversed %}
+													<tr>
+														<td>
+															{{ forloop.counter }}
+														</td>
+														<td><a href="{% url 'update_order' orders.id %}"><b>{{ orders.order_number }}</b></a></td>
+														<td>{{ orders.order_weight }}</td>
+														<td>{{ orders.collection_agency }}</td>
+														<td>{{ orders.disposal_agency }}</td>
+														<td>{{ orders.customer }}</td>
+														<td>{{ orders.get_status_display }}</td>
+														<td>
+															<a href="{% url 'update_order' orders.id %}" class="btn btn-primary shadow btn-xs sharp mr-1"><i class="fa fa-pencil"></i></a>
+															<a href="#" class="btn btn-danger shadow btn-xs sharp" data-toggle="modal" data-target="#del_order{{ orders.id }}"><i class="fa fa-trash"></i></a>
+														</td>
+													</tr>
+
+                                                    <!-- Modal -->
+                                                    <div class="modal fade" id="del_order{{ orders.id }}">
+                                                        <div class="modal-dialog modal-dialog-centered" role="document">
+                                                            <div class="modal-content">
+                                                                <div class="modal-header">
+                                                                    <h5 class="modal-title">Delete Order</h5>
+                                                                    <button type="button" class="close" data-dismiss="modal"><span>&times;</span>
+                                                                    </button>
+                                                                </div>
+                                                                <div class="modal-body">
+                                                                    <p>Are you sure you want to Delete Order  <b>" {{ orders.order_number }} ? "</b> </p>
+                                                                </div>
+                                                                <div class="modal-footer">
+                                                                    <button type="button" class="btn btn-danger light" data-dismiss="modal">Close</button>
+                                                                    <a href="{% url 'delete_order' orders.id %}" class="btn btn-danger">Delete</a>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+
+                                                {% endfor %}
+												</tbody>
+											</table>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+                </div>
+            </div>
+        </div>
+        <!--**********************************
+            Content body end
+        ***********************************-->
+    {% endblock %}

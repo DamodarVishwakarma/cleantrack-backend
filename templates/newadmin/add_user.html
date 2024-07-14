@@ -1,0 +1,236 @@
+{% extends 'newadmin/base.html' %}
+{% load static %}
+{% block body %}
+    <style>
+        .company_hide, .check_hide{
+            display: none;
+        }
+        .company_show, .check_show{
+            display: flex;
+        }
+        .bootstrap-select:not([class*=col-]):not([class*=form-control]):not(.input-group-btn) {
+    width: 100%;
+}  @media (min-width: 780px) {
+            .col-sm-9 {
+                max-width: 100%;
+            }
+        }
+    </style>
+     <div class="container-fluid">
+    <div class="row">
+        <div class="col-xl-12 col-xxl-12 col-lg-12 col-md-12">
+                        <div class="card">
+                            <div class="card-header">
+                                <h4 class="card-title">CREATE NEW USER</h4>
+                            </div>
+{#                            {% if message %}#}
+{#                                <p class="alert alert-danger" style="width:190px; position: absolute;right: 10px;top: 10px;">{{ message }}</p>#}
+{#                            {% endif %}#}
+                            {% if errors %}
+                                {% for key, value in errors.items %}
+                                    {% for item in value %}
+                                        <p class="alert alert-danger" style=" position: absolute;right: 10px;top: 10px;">{{ item }}</p>
+                                    {% endfor %}
+                                {% endfor %}
+                            {% endif %}
+                            <div class="card-body">
+                                <div class="basic-form">
+                                <form method="POST" action="" enctype="multipart/form-data">
+                                        {% csrf_token %}
+                                    <div class="form-group row">
+                                            <label class="col-sm-3 col-form-label">First Name</label>
+                                        <div class="col-md-9">
+                                    {{ form.first_name }}
+                                        </div>
+                                        </div>
+                                        <div class="form-group row">
+                                            <label class="col-sm-3 col-form-label">Last Name</label>
+                                        <div class="col-md-9">
+                                            {{ form.last_name }}
+                                        </div>
+                                        </div>
+                                        <div class="form-group row">
+                                            <label class="col-sm-3 col-form-label">Email</label>
+                                        <div class="col-md-9">
+                                            {{ form.email }}
+                                        </div>
+                                        </div>
+                                        <div class="form-group row">
+                                            <label class="col-sm-3 col-form-label">Phone</label>
+                                        <div class="col-md-9">
+                                            {{ form.phone }}
+                                        </div>
+                                        </div>
+                                        <div class="form-group row">
+                                            <label class="col-sm-3 col-form-label">Street</label>
+                                        <div class="col-md-9">
+                                            {{ form.street }}
+                                        </div>
+                                        </div>
+                                        <div class="form-group row">
+                                            <label class="col-sm-3 col-form-label">City</label>
+                                        <div class="col-md-9">
+                                            {{ form.city }}
+                                        </div>
+                                        </div>
+                                        <div class="form-group row">
+                                            <label class="col-sm-3 col-form-label">State</label>
+                                        <div class="col-md-9">
+                                            {{ form.state }}
+                                        </div>
+                                        </div>
+                                         <div class="form-group row">
+                                            <label class="col-sm-3 col-form-label">Zip Code</label>
+                                        <div class="col-md-9">
+                                             {{ form.zip_code }}
+                                        </div>
+                                        </div>
+                                        <div class="form-group row">
+                                           <label  class="col-sm-3 col-form-label">User Type</label>
+                                            <div class="col-md-9">
+                                            {{ form.user_type }}
+                                            </div>
+                                       </div>
+                                        <div class="form-group row show_body box 5">
+                                           <label  class="col-sm-3 col-form-label">Company</label>
+                                            <div class="col-md-9">
+                                            {{ form.company }}
+                                            </div>
+                                       </div>
+                                        <div class="form-group row">
+                                            <label class="col-sm-3 col-form-label">Password</label>
+                                        <div class="col-md-9">
+                                            {{ form.password }}
+                                        </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-md-3">
+                                                <label>
+                                                    {{ form.allow_to_send_mail }} <span>Allow to send Email</span>
+                                                </label>
+                                            </div>
+                                        {% if user.user_type == 1 %}
+                                            <div class="col-md-1">
+                                                <label>
+                                                    {{ form.is_active }} <span>Active</span>
+                                                </label>
+                                            </div>
+                                                <div class="col-md-2">
+                                                    <label>
+                                                          {{ form.is_staff }} <span>Staff Permission</span>
+                                                    </label>
+                                                </div>
+                                        {% endif %}
+                                            <div class="col-md-3 comp_admin_checkbox">
+                                            <label>
+                                                {{ form.approved_by_company_admin }} <span> Company Admin Approval </span>
+                                            </label>
+                                            </div>
+                                            {% if user.user_type == 1 %}
+                                              <div class="col-md-3 super_admin_approve_checkbox">
+                                            <label>
+                                                  {{ form.approved_by_super_admin }} <span> Super Admin Approval </span>
+                                            </label>
+                                              </div>
+                                                <div class="col-md-3 super_user_check">
+                                            <label>
+                                                  {{ form.is_superuser }} <span>Super User Permission</span>
+                                            </label>
+                                                </div>
+                                            {% endif %}
+                                        </div>
+                                        <div class="form-group row">
+                                            <div class="col-md-3"></div>
+                                            <div class="col-sm-9">
+                                                <button type="submit" class="btn btn-success col-md-8 btn-block">Submit</button>
+                                            </div>
+                                        </div>
+                                </form>
+                                </div>
+                            </div>
+                        </div>
+					</div>
+    </div>
+     </div>
+    <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+<script>
+$(document).ready(function(){
+    $("#id_user_type").change(function(){
+        $(this).find("option:selected").each(function(){
+            var optionValue = $(this).attr("value");
+          //  if(optionValue==5){
+          //      $(".show_body").removeClass("company_show");
+          //      $(".show_body").addClass("company_hide");
+          //      $("#id_company")[0].selectedIndex = 0;
+          //  }
+
+            if(optionValue==1){
+                $(".show_body").removeClass("company_show");
+                $(".show_body").addClass("company_hide");
+                $(".staf_checkbox").removeClass("check_hide");
+                $(".staf_checkbox").addClass("check_show");
+                $(".comp_admin_checkbox").removeClass("check_show");
+                $(".comp_admin_checkbox").addClass("check_hide");
+                $(".super_admin_approve_checkbox").removeClass("check_show");
+                $(".super_admin_approve_checkbox").addClass("check_hide");
+                $(".super_user_check").removeClass("check_hide");
+                $(".super_user_check").addClass("check_show");
+                $("#id_company")[0].selectedIndex = 0;
+            }
+            else if(optionValue==2 || optionValue==3){
+                $(".show_body").removeClass("company_hide");
+                $(".show_body").addClass("company_show");
+                $(".staf_checkbox").removeClass("check_show");
+                $(".staf_checkbox").addClass("check_hide");
+                $(".comp_admin_checkbox").removeClass("check_hide");
+                $(".comp_admin_checkbox").addClass("check_show");
+                $(".super_admin_approve_checkbox").removeClass("check_hide");
+                $(".super_admin_approve_checkbox").addClass("check_show");
+                $(".super_user_check").removeClass("check_show");
+                $(".super_user_check").addClass("check_hide");
+                $("#id_company")[0].selectedIndex = 0;
+            }
+            else if(optionValue==4){
+                $(".show_body").removeClass("company_show");
+                $(".show_body").addClass("company_hide");
+                $(".staf_checkbox").removeClass("check_hide");
+                $(".staf_checkbox").addClass("check_show");
+                $(".comp_admin_checkbox").removeClass("check_show");
+                $(".comp_admin_checkbox").addClass("check_hide");
+                $(".super_admin_approve_checkbox").removeClass("check_hide");
+                $(".super_admin_approve_checkbox").addClass("check_show");
+                $(".super_user_check").removeClass("check_show");
+                $(".super_user_check").addClass("check_hide");
+                $("#id_company")[0].selectedIndex = 0;
+            }
+            else if(optionValue==5){
+                $(".show_body").removeClass("company_hide");
+                $(".show_body").addClass("company_show");
+                $(".staf_checkbox").removeClass("check_hide");
+                $(".staf_checkbox").addClass("check_show");
+                $(".super_admin_approve_checkbox").removeClass("check_hide");
+                $(".super_admin_approve_checkbox").addClass("check_show");
+                $(".super_user_check").removeClass("check_show");
+                $(".super_user_check").addClass("check_hide");
+                $("#id_company")[0].selectedIndex = 0;
+            }
+            else if(optionValue==6){
+                $(".show_body").removeClass("company_hide");
+                $(".show_body").addClass("company_show");
+                $(".staf_checkbox").removeClass("check_hide");
+                $(".staf_checkbox").addClass("check_show");
+                $(".comp_admin_checkbox").removeClass("check_show");
+                $(".comp_admin_checkbox").addClass("check_hide");
+                $(".super_admin_approve_checkbox").removeClass("check_hide");
+                $(".super_admin_approve_checkbox").addClass("check_show");
+                $(".super_user_check").removeClass("check_show");
+                $(".super_user_check").addClass("check_hide");
+                $("#id_company")[0].selectedIndex = 0;
+
+            }
+        });
+    }).change();
+});
+</script>
+{% endblock %}
+

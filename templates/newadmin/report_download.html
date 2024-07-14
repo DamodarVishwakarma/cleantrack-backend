@@ -1,0 +1,71 @@
+{% extends 'newadmin/base.html' %}
+{% load static %}
+{% block body %}
+
+    <!-- Daterange picker -->
+    <link href="{% static 'newadminstatic/vendor/bootstrap-daterangepicker/daterangepicker.css' %}" rel="stylesheet">
+    <!-- Clockpicker -->
+    <link href="{% static 'newadminstatic/vendor/clockpicker/css/bootstrap-clockpicker.min.css' %}" rel="stylesheet">
+    <!-- asColorpicker -->
+    <link href="{% static 'newadminstatic/vendor/jquery-asColorPicker/css/asColorPicker.min.css' %}" rel="stylesheet">
+    <!-- Material color picker -->
+    <link href="{% static 'newadminstatic/vendor/bootstrap-material-datetimepicker/css/bootstrap-material-datetimepicker.css' %}" rel="stylesheet">
+    <!-- Pick date -->
+    <link rel="stylesheet" href="{% static 'newadminstatic/vendor/pickadate/themes/default.css' %}">
+    <link rel="stylesheet" href="{% static 'newadminstatic/vendor/pickadate/themes/default.date.css' %}">
+    <!-- Custom Stylesheet -->
+    	<link href="{% static 'newadminstatic/vendor/bootstrap-select/dist/css/bootstrap-select.min.css' %}" rel="stylesheet">
+    <div class="container-fluid">
+        <div class="row">
+                <div class="col-md-12">
+                {% if error %}
+                    <p class="alert alert-danger" style="z-index:9;position: absolute;top: 30px; right: 30px;">{{ error }}</p>
+                {% endif %}
+                    <div class="card">
+                        <div class="card-body">
+                            <form action="" method="post">
+                                {% csrf_token %}
+                                <div class="row">
+                                    <div class="col-md-4">
+                                        <strong>Start Date</strong>
+                                        <input name="datepicker" class="form-control" id="date-format">
+                                    </div>
+                                    <div class="col-md-4">
+                                        <strong>End Date</strong>
+                                        <input name="datepicker2" placeholder="" class="form-control" id="date-format2">
+                                    </div>
+                                    <div class="col-md-4">
+                                        <input type="submit" value="Download" class="btn btn-square btn-success mt-4">
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+{% endblock %}
+
+{% block script_link %}
+
+    <!-- Daterangepicker -->
+    <!-- momment js is must -->
+    <script src="{% static 'newadminstatic/vendor/moment/moment.min.js' %}"></script>
+    <!-- clockpicker -->
+    <script src="{% static 'newadminstatic/vendor/bootstrap-daterangepicker/daterangepicker.js' %}"></script>
+    <!-- Material color picker -->
+    <script src="{% static 'newadminstatic/vendor/bootstrap-material-datetimepicker/js/bootstrap-material-datetimepicker.js' %}"></script>
+
+    <!-- Daterangepicker -->
+    <script src="{% static 'newadminstatic/js/plugins-init/bs-daterange-picker-init.js' %}"></script>
+    <!-- Clockpicker init -->
+    <script src="{% static 'newadminstatic/js/plugins-init/clock-picker-init.js' %}"></script>
+    <!-- asColorPicker init -->
+    <script src="{% static 'newadminstatic/js/plugins-init/jquery-asColorPicker.init.js' %}"></script>
+    <!-- Material color picker init -->
+    <script src="{% static 'newadminstatic/js/plugins-init/material-date-picker-init.js' %}"></script>
+    <!-- Pickdate -->
+    <script src="{% static 'newadminstatic/js/plugins-init/pickadate-init.js' %}"></script>
+{% endblock %}
